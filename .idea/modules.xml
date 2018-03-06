@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/FiftynSquare.iml" filepath="$PROJECT_DIR$/FiftynSquare.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/FiftynSquare_android.iml" filepath="$PROJECT_DIR$/.idea/modules/FiftynSquare_android.iml" group="FiftynSquare" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/FiftynSquare_desktop.iml" filepath="$PROJECT_DIR$/.idea/modules/FiftynSquare_desktop.iml" group="FiftynSquare" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/FiftynSquare_embedded.iml" filepath="$PROJECT_DIR$/.idea/modules/FiftynSquare_embedded.iml" group="FiftynSquare" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/FiftynSquare_ios.iml" filepath="$PROJECT_DIR$/.idea/modules/FiftynSquare_ios.iml" group="FiftynSquare" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/FiftynSquare_main.iml" filepath="$PROJECT_DIR$/.idea/modules/FiftynSquare_main.iml" group="FiftynSquare" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/FiftynSquare_test.iml" filepath="$PROJECT_DIR$/.idea/modules/FiftynSquare_test.iml" group="FiftynSquare" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Projects-FiftynSquare.iml" filepath="$PROJECT_DIR$/.idea/modules/Projects-FiftynSquare.iml" />
+    </modules>
+  </component>
+</project>

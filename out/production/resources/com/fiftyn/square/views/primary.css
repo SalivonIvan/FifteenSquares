@@ -1,0 +1,9 @@
+.view {-fx-background-color: aqua;
+
+}
+.button{
+    -fx-background-radius: 25;
+}
+.text{
+    -fx-background-color: crimson;
+}

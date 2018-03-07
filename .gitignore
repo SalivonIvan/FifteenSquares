@@ -1,1 +1,8 @@
 # Created by .ignore support plugin (hsz.mobi)
+.idea/inspectionProfiles/
+.idea/sonarlint/
+.idea/vcs.xml
+.nb-gradle/
+build/
+out/production/classes/generated/
+.gradle/*

@@ -7,12 +7,21 @@ import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.layout.layer.FloatingActionButton;
 import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Side;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
+import javafx.scene.layout.VBox;
+import javafx.util.Duration;
+
+import java.time.LocalTime;
 
 public class SecondaryPresenter {
 
@@ -20,12 +29,39 @@ public class SecondaryPresenter {
     private View secondary;
     @FXML
     private Node emptySquare;
+    @FXML
+    private Label valueTimer;
+    @FXML
+    private Button startButton;
+    @FXML
+    private VBox squareBox;
+    private Timeline timeline;
 
     public void initialize() {
         secondary.setShowTransitionFactory(BounceInRightTransition::new);
 
-        secondary.getLayers().add(new FloatingActionButton(MaterialDesignIcon.INFO.text,
-                e -> System.out.println("Info")).getLayer());
+        initTimeLine();
+
+        FloatingActionButton playButton =new FloatingActionButton(MaterialDesignIcon.PLAY_ARROW.text,
+                e -> {
+                    Button source = (Button) e.getSource();
+                    if (source.getText().equals(MaterialDesignIcon.PLAY_ARROW.text)) {
+                        squareBox.setDisable(false);
+                        timeline.playFromStart();
+                        System.out.println("Play");
+                    }
+
+                });
+
+        FloatingActionButton pauseButton = new FloatingActionButton(MaterialDesignIcon.PAUSE.text,
+                e -> {
+                    squareBox.setDisable(true);
+                    timeline.stop();
+                    System.out.println("Pause");
+                });
+        playButton.attachTo(pauseButton, Side.LEFT);
+
+        secondary.getLayers().add(pauseButton.getLayer());
 
         secondary.showingProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue) {
@@ -41,7 +77,7 @@ public class SecondaryPresenter {
 
     @FXML
     void onMousePressed(MouseEvent event) {
-        System.out.println("Pressed schape");
+        System.out.println("Pressed square");
         Node square = ((Node) event.getSource());
 //        square.setTranslateX(55);
         GridPane parent = (GridPane) square.getParent();
@@ -58,6 +94,18 @@ public class SecondaryPresenter {
         }
 
 
+    }
+
+    private void initTimeLine() {
+        timeline = new Timeline(new KeyFrame(Duration.millis(1), new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                valueTimer.setText(LocalTime.now().toString());
+            }
+        }));
+
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.setAutoReverse(false);
     }
 
     private boolean isMaybeMove(int gridRowNumber, int gridColumnNumber, PositionSquare childSqPosition, PositionSquare emptySqPosition) {

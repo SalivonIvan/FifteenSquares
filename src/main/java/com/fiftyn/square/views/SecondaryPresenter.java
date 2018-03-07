@@ -8,6 +8,7 @@ import com.gluonhq.charm.glisten.layout.layer.FloatingActionButton;
 import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Rectangle;
@@ -18,7 +19,7 @@ public class SecondaryPresenter {
     @FXML
     private View secondary;
     @FXML
-    private Rectangle emptySquare;
+    private Node emptySquare;
 
     public void initialize() {
         secondary.setShowTransitionFactory(BounceInRightTransition::new);
@@ -41,7 +42,7 @@ public class SecondaryPresenter {
     @FXML
     void onMousePressed(MouseEvent event) {
         System.out.println("Pressed schape");
-        Shape square = ((Shape) event.getSource());
+        Node square = ((Node) event.getSource());
 //        square.setTranslateX(55);
         GridPane parent = (GridPane) square.getParent();
         PositionSquare emptySqPosition = new PositionSquare(GridPane.getRowIndex(emptySquare), GridPane.getColumnIndex(emptySquare));

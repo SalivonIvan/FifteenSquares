@@ -34,7 +34,7 @@ jfxmobile {
     ios {
         infoPList = file('src/ios/Default-Info.plist')
         forceLinkClasses = [
-                'com.fiftyn.square.**.*',
+                'com.fifteen.squares.**.*',
                 'com.gluonhq.**.*',
                 'javax.annotations.**.*',
                 'javax.inject.**.*',

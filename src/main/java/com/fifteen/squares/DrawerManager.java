@@ -23,13 +23,13 @@ public class DrawerManager {
     public DrawerManager() {
         this.drawer = new NavigationDrawer();
         
-        NavigationDrawer.Header header = new NavigationDrawer.Header("Gluon Mobile",
-                "Multi View Project",
+        NavigationDrawer.Header header = new NavigationDrawer.Header("Fifteen Squares",
+                "Menu",
                 new Avatar(21, new Image(DrawerManager.class.getResourceAsStream("/icon.png"))));
         drawer.setHeader(header);
         
-        final Item primaryItem = new ViewItem("Primary", MaterialDesignIcon.HOME.graphic(), PRIMARY_VIEW, ViewStackPolicy.SKIP);
-        final Item secondaryItem = new ViewItem("Secondary", MaterialDesignIcon.DASHBOARD.graphic(), SECONDARY_VIEW);
+        final Item primaryItem = new ViewItem("About", MaterialDesignIcon.DESCRIPTION.graphic(), PRIMARY_VIEW, ViewStackPolicy.SKIP);
+        final Item secondaryItem = new ViewItem("Game", MaterialDesignIcon.GAMEPAD.graphic(), SECONDARY_VIEW);
         drawer.getItems().addAll(primaryItem, secondaryItem);
         
         if (Platform.isDesktop()) {

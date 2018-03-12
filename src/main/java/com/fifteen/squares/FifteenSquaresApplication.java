@@ -25,7 +25,7 @@ public class FifteenSquaresApplication extends MobileApplication {
 
     @Override
     public void postInit(Scene scene) {
-        Swatch.BLUE.assignTo(scene);
+        Swatch.GREY.assignTo(scene);
 
         scene.getStylesheets().add(FifteenSquaresApplication.class.getResource("style.css").toExternalForm());
         ((Stage) scene.getWindow()).getIcons().add(new Image(FifteenSquaresApplication.class.getResourceAsStream("/icon.png")));

@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
         <key>CFBundleIdentifier</key>
-        <string>com.fiftyn.square.FiftynSquareApplication</string>
+        <string>FiftynSquareApplication</string>
         <key>CFBundleVersion</key>
         <string>1.0</string>
         <key>CFBundleExecutable</key>

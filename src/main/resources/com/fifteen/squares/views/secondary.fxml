@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<View fx:id="secondary" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="350.0" stylesheets="@secondary.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fiftyn.square.views.SecondaryPresenter">
+<View fx:id="secondary" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="350.0" stylesheets="@secondary.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fifteen.squares.views.SecondaryPresenter">
    <center>
       <VBox fx:id="squareBox" alignment="TOP_CENTER" disable="true" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>

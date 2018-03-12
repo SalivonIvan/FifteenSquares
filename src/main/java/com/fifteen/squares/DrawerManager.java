@@ -1,4 +1,4 @@
-package com.fiftyn.square;
+package com.fifteen.squares;
 
 import com.gluonhq.charm.down.Platform;
 import com.gluonhq.charm.down.Services;
@@ -10,9 +10,9 @@ import com.gluonhq.charm.glisten.control.NavigationDrawer;
 import com.gluonhq.charm.glisten.control.NavigationDrawer.Item;
 import com.gluonhq.charm.glisten.control.NavigationDrawer.ViewItem;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
-import static com.fiftyn.square.FiftynSquareApplication.MENU_LAYER;
-import static com.fiftyn.square.FiftynSquareApplication.PRIMARY_VIEW;
-import static com.fiftyn.square.FiftynSquareApplication.SECONDARY_VIEW;
+import static com.fifteen.squares.FifteenSquaresApplication.MENU_LAYER;
+import static com.fifteen.squares.FifteenSquaresApplication.PRIMARY_VIEW;
+import static com.fifteen.squares.FifteenSquaresApplication.SECONDARY_VIEW;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 

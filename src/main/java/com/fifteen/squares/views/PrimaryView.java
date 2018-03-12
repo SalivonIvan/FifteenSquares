@@ -1,4 +1,4 @@
-package com.fiftyn.square.views;
+package com.fifteen.squares.views;
 
 import com.gluonhq.charm.glisten.mvc.View;
 import java.io.IOException;

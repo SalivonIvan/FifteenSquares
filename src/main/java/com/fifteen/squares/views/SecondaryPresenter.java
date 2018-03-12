@@ -1,6 +1,6 @@
-package com.fiftyn.square.views;
+package com.fifteen.squares.views;
 
-import com.fiftyn.square.FiftynSquareApplication;
+import com.fifteen.squares.FifteenSquaresApplication;
 import com.gluonhq.charm.glisten.animation.BounceInRightTransition;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.AppBar;
@@ -67,7 +67,7 @@ public class SecondaryPresenter {
             if (newValue) {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
                 appBar.setNavIcon(MaterialDesignIcon.MENU.button(e ->
-                        MobileApplication.getInstance().showLayer(FiftynSquareApplication.MENU_LAYER)));
+                        MobileApplication.getInstance().showLayer(FifteenSquaresApplication.MENU_LAYER)));
                 appBar.setTitleText("Secondary");
                 appBar.getActionItems().add(MaterialDesignIcon.FAVORITE.button(e ->
                         System.out.println("Favorite")));

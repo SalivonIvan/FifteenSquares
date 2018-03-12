@@ -1,10 +1,10 @@
-package com.fiftyn.square.views;
+package com.fifteen.squares.views;
 
+import com.fifteen.squares.FifteenSquaresApplication;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
-import com.fiftyn.square.FiftynSquareApplication;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
@@ -21,7 +21,7 @@ public class PrimaryPresenter {
             if (newValue) {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
                 appBar.setNavIcon(MaterialDesignIcon.MENU.button(e -> 
-                        MobileApplication.getInstance().showLayer(FiftynSquareApplication.MENU_LAYER)));
+                        MobileApplication.getInstance().showLayer(FifteenSquaresApplication.MENU_LAYER)));
                 appBar.setTitleText("Primary");
                 appBar.getActionItems().add(MaterialDesignIcon.SEARCH.button(e -> 
                         System.out.println("Search")));

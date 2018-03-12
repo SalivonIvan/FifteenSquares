@@ -6,3 +6,5 @@
 build/
 out/production/classes/generated/
 /.gradle/
+/.idea/
+/.idea/workspace.xml

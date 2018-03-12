@@ -5,4 +5,4 @@
 .nb-gradle/
 build/
 out/production/classes/generated/
-.gradle/*
+/.gradle/

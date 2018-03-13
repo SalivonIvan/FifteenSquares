@@ -10,15 +10,17 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<View fx:id="secondary" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="350.0" stylesheets="@secondary.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fifteen.squares.views.SecondaryPresenter">
+<View fx:id="secondary" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="350.0" stylesheets="@secondary.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fifteen.squares.views.SecondaryPresenter">
    <center>
       <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <GridPane fx:id="squaresBox" alignment="CENTER" disable="true" hgap="5.0" vgap="5.0">
+            <GridPane fx:id="squaresBox" alignment="CENTER" disable="true" hgap="5.0" opacity="0.6" vgap="5.0">
               <columnConstraints>
                 <ColumnConstraints halignment="RIGHT" maxWidth="-Infinity" minWidth="-Infinity" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" />
@@ -34,7 +36,7 @@
                <children>
                   <Pane fx:id="oneSquare" onMousePressed="#onMousePressed" prefHeight="50.0" prefWidth="50.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
                      <children>
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#42dd90" height="50.0" stroke="BLACK" strokeType="INSIDE" width="50.0" />
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="50.0" stroke="BLACK" strokeType="INSIDE" width="50.0" />
                         <Text layoutX="11.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1">
                            <font>
                               <Font size="30.0" />
@@ -208,7 +210,19 @@
                   <Label fx:id="valueTimer" text="   " />
                </children>
             </HBox>
-            <Label fx:id="winLabel" text="WINNER!!!" visible="false" />
+            <Label fx:id="winLabel" text="WINNER!!!" visible="false">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+               <textFill>
+                  <LinearGradient endX="1.0" endY="0.6523809523809524">
+                     <stops>
+                        <Stop color="#19e13e" />
+                        <Stop color="#eb1e13" offset="0.5818224908164471" />
+                        <Stop color="#eb1e13fe" offset="1.0" />
+                     </stops>
+                  </LinearGradient>
+               </textFill></Label>
          </children>
          <padding>
             <Insets top="20.0" />

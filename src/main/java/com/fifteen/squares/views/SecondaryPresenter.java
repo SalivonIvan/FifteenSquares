@@ -41,11 +41,14 @@ public class SecondaryPresenter {
     private Timeline timeline;
     private long currentNumberSeconds = 0;
     private Node[][] winnerPositionSquares;
-    private Node[][] startPositionSquares;
+    private Node[][] targetPositionSquares;
     private boolean isStartGame = false;
 
     public void initialize() {
         secondary.setShowTransitionFactory(BounceInRightTransition::new);
+        valueTimer.setText(LocalTime.ofSecondOfDay(currentNumberSeconds).toString());
+        winLabel.visibleProperty().addListener((observable) -> {
+        });
 
         initStartPositionSquares();
 
@@ -54,22 +57,25 @@ public class SecondaryPresenter {
         FloatingActionButton playButton = new FloatingActionButton(MaterialDesignIcon.PLAY_ARROW.text,
                 e -> {
                     Button source = (Button) e.getSource();
-                    if (source.getText().equals(MaterialDesignIcon.PLAY_ARROW.text)) {
-                        squaresBox.setDisable(false);
-                        timeline.playFromStart();
-                        if (!isStartGame) {
-                            setСomplexity(3);
-                            isStartGame = true;
-                        }
-
-                        System.out.println("Play");
+                    squaresBox.setDisable(false);
+                    squaresBox.setOpacity(1);
+                    timeline.playFromStart();
+                    if (!isStartGame) {
+                        valueTimer.setText(LocalTime.ofSecondOfDay(currentNumberSeconds).toString());
+                        initStartPositionSquares();
+                        setСomplexity(500);
+                        isStartGame = true;
+                        winLabel.setVisible(false);
                     }
+
+                    System.out.println("Play");
 
                 });
 
         FloatingActionButton pauseButton = new FloatingActionButton(MaterialDesignIcon.PAUSE.text,
                 e -> {
                     squaresBox.setDisable(true);
+                    squaresBox.setOpacity(0.6);
                     timeline.stop();
                     System.out.println("Pause");
                 });
@@ -100,7 +106,6 @@ public class SecondaryPresenter {
             squaresBox.setDisable(true);
             timeline.stop();
             currentNumberSeconds = 0;
-            valueTimer.setText(LocalTime.ofSecondOfDay(currentNumberSeconds).toString());
         }
 
     }
@@ -175,28 +180,28 @@ public class SecondaryPresenter {
                 Node childSquare = null;
                 switch (courseMovement) {
                     case LEFT:
-                        childSquare = startPositionSquares[emptySqPosition.rowNumber][emptySqPosition.columnNumber - 1];
+                        childSquare = targetPositionSquares[emptySqPosition.rowNumber][emptySqPosition.columnNumber - 1];
                         moveSquares(childSquare);
-                        startPositionSquares[emptySqPosition.rowNumber][emptySqPosition.columnNumber - 1] = emptySquare;
-                        startPositionSquares[emptySqPosition.rowNumber][emptySqPosition.columnNumber] = childSquare;
+                        targetPositionSquares[emptySqPosition.rowNumber][emptySqPosition.columnNumber - 1] = emptySquare;
+                        targetPositionSquares[emptySqPosition.rowNumber][emptySqPosition.columnNumber] = childSquare;
                         break;
                     case RIGHT:
-                        childSquare = startPositionSquares[emptySqPosition.rowNumber][emptySqPosition.columnNumber + 1];
+                        childSquare = targetPositionSquares[emptySqPosition.rowNumber][emptySqPosition.columnNumber + 1];
                         moveSquares(childSquare);
-                        startPositionSquares[emptySqPosition.rowNumber][emptySqPosition.columnNumber + 1] = emptySquare;
-                        startPositionSquares[emptySqPosition.rowNumber][emptySqPosition.columnNumber] = childSquare;
+                        targetPositionSquares[emptySqPosition.rowNumber][emptySqPosition.columnNumber + 1] = emptySquare;
+                        targetPositionSquares[emptySqPosition.rowNumber][emptySqPosition.columnNumber] = childSquare;
                         break;
                     case TOP:
-                        childSquare = startPositionSquares[emptySqPosition.rowNumber - 1][emptySqPosition.columnNumber];
+                        childSquare = targetPositionSquares[emptySqPosition.rowNumber - 1][emptySqPosition.columnNumber];
                         moveSquares(childSquare);
-                        startPositionSquares[emptySqPosition.rowNumber - 1][emptySqPosition.columnNumber] = emptySquare;
-                        startPositionSquares[emptySqPosition.rowNumber][emptySqPosition.columnNumber] = childSquare;
+                        targetPositionSquares[emptySqPosition.rowNumber - 1][emptySqPosition.columnNumber] = emptySquare;
+                        targetPositionSquares[emptySqPosition.rowNumber][emptySqPosition.columnNumber] = childSquare;
                         break;
                     case BOTTOM:
-                        childSquare = startPositionSquares[emptySqPosition.rowNumber + 1][emptySqPosition.columnNumber];
+                        childSquare = targetPositionSquares[emptySqPosition.rowNumber + 1][emptySqPosition.columnNumber];
                         moveSquares(childSquare);
-                        startPositionSquares[emptySqPosition.rowNumber + 1][emptySqPosition.columnNumber] = emptySquare;
-                        startPositionSquares[emptySqPosition.rowNumber][emptySqPosition.columnNumber] = childSquare;
+                        targetPositionSquares[emptySqPosition.rowNumber + 1][emptySqPosition.columnNumber] = emptySquare;
+                        targetPositionSquares[emptySqPosition.rowNumber][emptySqPosition.columnNumber] = childSquare;
                         break;
 
                 }
@@ -217,12 +222,12 @@ public class SecondaryPresenter {
     private void initStartPositionSquares() {
         int countRow = squaresBox.getRowConstraints().size();
         int countColumn = squaresBox.getColumnConstraints().size();
-        startPositionSquares = new Pane[countRow][countColumn];
+        targetPositionSquares = new Pane[countRow][countColumn];
         winnerPositionSquares = new Pane[countRow][countColumn];
         squaresBox.getChildren().forEach(node -> {
             int rowI = GridPane.getRowIndex(node);
             int columnI = GridPane.getColumnIndex(node);
-            startPositionSquares[rowI][columnI] = node;
+            targetPositionSquares[rowI][columnI] = node;
             winnerPositionSquares[rowI][columnI] = node;
         });
     }

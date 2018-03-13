@@ -25,6 +25,10 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import javafx.animation.Animation;
+import javafx.animation.KeyValue;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.LinearGradient;
 
 public class SecondaryPresenter {
 
@@ -52,7 +56,8 @@ public class SecondaryPresenter {
 
         initStartPositionSquares();
 
-        initTimeLine();
+        initTimeLineValueTimer();
+        initTimeLineWinLabel();
 
         FloatingActionButton playButton = new FloatingActionButton(MaterialDesignIcon.PLAY_ARROW.text,
                 e -> {
@@ -63,7 +68,7 @@ public class SecondaryPresenter {
                     if (!isStartGame) {
                         valueTimer.setText(LocalTime.ofSecondOfDay(currentNumberSeconds).toString());
                         initStartPositionSquares();
-                        setСomplexity(500);
+                        setСomplexity(3);
                         isStartGame = true;
                         winLabel.setVisible(false);
                     }
@@ -124,7 +129,7 @@ public class SecondaryPresenter {
         }
     }
 
-    private void initTimeLine() {
+    private void initTimeLineValueTimer() {
         timeline = new Timeline(new KeyFrame(Duration.millis(1000), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -134,6 +139,17 @@ public class SecondaryPresenter {
 
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.setAutoReverse(false);
+    }
+    
+    private void initTimeLineWinLabel(){
+        KeyValue kv1 = new KeyValue(winLabel.textFillProperty(), Color.RED);
+        KeyValue kv2 = new KeyValue(winLabel.textFillProperty(), Color.GREEN);
+        KeyFrame kf1 = new KeyFrame(Duration.ZERO, kv1);
+        KeyFrame kf2 = new KeyFrame(Duration.millis(500), kv2);
+        Timeline timeline = new Timeline(kf1,kf2);
+        timeline.setAutoReverse(true);
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
     }
 
     private boolean isMaybeMove(int gridRowNumber, int gridColumnNumber, PositionSquare childSqPosition, PositionSquare emptySqPosition) {

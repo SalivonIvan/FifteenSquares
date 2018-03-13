@@ -208,6 +208,7 @@
                   <Label fx:id="valueTimer" text="   " />
                </children>
             </HBox>
+            <Label fx:id="winLabel" text="WINNER!!!" visible="false" />
          </children>
          <padding>
             <Insets top="20.0" />

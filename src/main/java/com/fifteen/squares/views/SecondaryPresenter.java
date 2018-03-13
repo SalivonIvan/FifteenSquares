@@ -80,11 +80,11 @@ public class SecondaryPresenter {
         secondary.showingProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue) {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
-                appBar.setNavIcon(MaterialDesignIcon.MENU.button(e ->
-                        MobileApplication.getInstance().showLayer(FifteenSquaresApplication.MENU_LAYER)));
+                appBar.setNavIcon(MaterialDesignIcon.MENU.button(e
+                        -> MobileApplication.getInstance().showLayer(FifteenSquaresApplication.MENU_LAYER)));
                 appBar.setTitleText("Game");
-                appBar.getActionItems().add(MaterialDesignIcon.FAVORITE.button(e ->
-                        System.out.println("Favorite")));
+                appBar.getActionItems().add(MaterialDesignIcon.FAVORITE.button(e
+                        -> System.out.println("Favorite")));
             }
         });
     }
@@ -93,9 +93,16 @@ public class SecondaryPresenter {
     void onMousePressed(MouseEvent event) {
         System.out.println("Pressed square");
         Node childSquare = ((Node) event.getSource());
-              moveSquares(childSquare);
-        if (isWinnerPosition())
+        moveSquares(childSquare);
+        if (isWinnerPosition()) {
             winLabel.setVisible(true);
+            isStartGame = false;
+            squaresBox.setDisable(true);
+            timeline.stop();
+            currentNumberSeconds = 0;
+            valueTimer.setText(LocalTime.ofSecondOfDay(currentNumberSeconds).toString());
+        }
+
     }
 
     private void moveSquares(Node childSquare) {
@@ -150,14 +157,18 @@ public class SecondaryPresenter {
             List<CourseMovement> courses = new ArrayList<>();
             PositionSquare emptySqPosition = new PositionSquare(GridPane.getRowIndex(emptySquare), GridPane.getColumnIndex(emptySquare));
 
-            if (emptySqPosition.columnNumber - 1 >= 0)
+            if (emptySqPosition.columnNumber - 1 >= 0) {
                 courses.add(CourseMovement.LEFT);
-            if (emptySqPosition.columnNumber + 1 <= squaresBox.getColumnConstraints().size() - 1)
+            }
+            if (emptySqPosition.columnNumber + 1 <= squaresBox.getColumnConstraints().size() - 1) {
                 courses.add(CourseMovement.RIGHT);
-            if (emptySqPosition.rowNumber - 1 >= 0)
+            }
+            if (emptySqPosition.rowNumber - 1 >= 0) {
                 courses.add(CourseMovement.TOP);
-            if (emptySqPosition.rowNumber + 1 <= squaresBox.getRowConstraints().size() - 1)
+            }
+            if (emptySqPosition.rowNumber + 1 <= squaresBox.getRowConstraints().size() - 1) {
                 courses.add(CourseMovement.BOTTOM);
+            }
 
             CourseMovement courseMovement = randomCourse(courses);
             if (courseMovement != null) {
@@ -192,14 +203,14 @@ public class SecondaryPresenter {
             }
         }
 
-
     }
 
     private CourseMovement randomCourse(List<CourseMovement> courses) {
-        if (courses.isEmpty())
+        if (courses.isEmpty()) {
             return null;
-        else
+        } else {
             return courses.get(new Random().nextInt(courses.size()));
+        }
 
     }
 
@@ -219,14 +230,17 @@ public class SecondaryPresenter {
     private boolean isWinnerPosition() {
         for (int i = 0; i < squaresBox.getRowConstraints().size(); i++) {
             for (int j = 0; j < squaresBox.getColumnConstraints().size(); j++) {
-                if (!winnerPositionSquares[i][j].getId().equals(startPositionSquares[i][j].getId()))
+                Node square = winnerPositionSquares[i][j];
+                if (i != GridPane.getRowIndex(square) || j != GridPane.getColumnIndex(square)) {
                     return false;
+                }
             }
         }
         return true;
     }
 
     class PositionSquare {
+
         public PositionSquare(int rowNumber, int columnNumber) {
             this.rowNumber = rowNumber;
             this.columnNumber = columnNumber;

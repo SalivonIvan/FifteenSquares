@@ -36,10 +36,13 @@ public class SecondaryPresenter {
     private Label valueTimer;
     @FXML
     private GridPane squaresBox;
+    @FXML
+    private Label winLabel;
     private Timeline timeline;
     private long currentNumberSeconds = 0;
     private Node[][] winnerPositionSquares;
     private Node[][] startPositionSquares;
+    private boolean isStartGame = false;
 
     public void initialize() {
         secondary.setShowTransitionFactory(BounceInRightTransition::new);
@@ -54,7 +57,11 @@ public class SecondaryPresenter {
                     if (source.getText().equals(MaterialDesignIcon.PLAY_ARROW.text)) {
                         squaresBox.setDisable(false);
                         timeline.playFromStart();
-                        setСomplexity(100);
+                        if (!isStartGame) {
+                            setСomplexity(3);
+                            isStartGame = true;
+                        }
+
                         System.out.println("Play");
                     }
 
@@ -86,8 +93,9 @@ public class SecondaryPresenter {
     void onMousePressed(MouseEvent event) {
         System.out.println("Pressed square");
         Node childSquare = ((Node) event.getSource());
-
-        moveSquares(childSquare);
+              moveSquares(childSquare);
+        if (isWinnerPosition())
+            winLabel.setVisible(true);
     }
 
     private void moveSquares(Node childSquare) {
@@ -141,14 +149,14 @@ public class SecondaryPresenter {
         for (int i = 0; i < complexity; i++) {
             List<CourseMovement> courses = new ArrayList<>();
             PositionSquare emptySqPosition = new PositionSquare(GridPane.getRowIndex(emptySquare), GridPane.getColumnIndex(emptySquare));
-            GridPane parent = (GridPane) emptySquare.getParent();
+
             if (emptySqPosition.columnNumber - 1 >= 0)
                 courses.add(CourseMovement.LEFT);
-            if (emptySqPosition.columnNumber + 1 <= parent.getColumnConstraints().size() - 1)
+            if (emptySqPosition.columnNumber + 1 <= squaresBox.getColumnConstraints().size() - 1)
                 courses.add(CourseMovement.RIGHT);
             if (emptySqPosition.rowNumber - 1 >= 0)
                 courses.add(CourseMovement.TOP);
-            if (emptySqPosition.rowNumber + 1 <= parent.getRowConstraints().size() - 1)
+            if (emptySqPosition.rowNumber + 1 <= squaresBox.getRowConstraints().size() - 1)
                 courses.add(CourseMovement.BOTTOM);
 
             CourseMovement courseMovement = randomCourse(courses);
@@ -199,9 +207,23 @@ public class SecondaryPresenter {
         int countRow = squaresBox.getRowConstraints().size();
         int countColumn = squaresBox.getColumnConstraints().size();
         startPositionSquares = new Pane[countRow][countColumn];
+        winnerPositionSquares = new Pane[countRow][countColumn];
         squaresBox.getChildren().forEach(node -> {
-            startPositionSquares[GridPane.getRowIndex(node)][GridPane.getColumnIndex(node)] = node;
+            int rowI = GridPane.getRowIndex(node);
+            int columnI = GridPane.getColumnIndex(node);
+            startPositionSquares[rowI][columnI] = node;
+            winnerPositionSquares[rowI][columnI] = node;
         });
+    }
+
+    private boolean isWinnerPosition() {
+        for (int i = 0; i < squaresBox.getRowConstraints().size(); i++) {
+            for (int j = 0; j < squaresBox.getColumnConstraints().size(); j++) {
+                if (!winnerPositionSquares[i][j].getId().equals(startPositionSquares[i][j].getId()))
+                    return false;
+            }
+        }
+        return true;
     }
 
     class PositionSquare {

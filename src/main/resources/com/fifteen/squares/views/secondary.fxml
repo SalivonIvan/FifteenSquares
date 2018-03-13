@@ -16,9 +16,9 @@
 
 <View fx:id="secondary" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="350.0" stylesheets="@secondary.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fifteen.squares.views.SecondaryPresenter">
    <center>
-      <VBox fx:id="squareBox" alignment="TOP_CENTER" disable="true" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+      <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <GridPane alignment="CENTER" hgap="5.0" vgap="5.0">
+            <GridPane fx:id="squaresBox" alignment="CENTER" disable="true" hgap="5.0" vgap="5.0">
               <columnConstraints>
                 <ColumnConstraints halignment="RIGHT" maxWidth="-Infinity" minWidth="-Infinity" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" />
@@ -34,7 +34,7 @@
                <children>
                   <Pane fx:id="oneSquare" onMousePressed="#onMousePressed" prefHeight="50.0" prefWidth="50.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
                      <children>
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="50.0" stroke="BLACK" strokeType="INSIDE" width="50.0" />
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#42dd90" height="50.0" stroke="BLACK" strokeType="INSIDE" width="50.0" />
                         <Text layoutX="11.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1">
                            <font>
                               <Font size="30.0" />

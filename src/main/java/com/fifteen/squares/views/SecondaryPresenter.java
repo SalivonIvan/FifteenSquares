@@ -18,7 +18,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
 import java.time.LocalTime;
@@ -31,60 +31,20 @@ public class SecondaryPresenter {
     @FXML
     private View secondary;
     @FXML
-    private Node oneSquare;
-
-    @FXML
-    private Node twoSquare;
-
-    @FXML
-    private Node threeSquare;
-
-    @FXML
-    private Node fourSquare;
-
-    @FXML
-    private Node fifeSquare;
-
-    @FXML
-    private Node sixSquare;
-
-    @FXML
-    private Node sevenSquare;
-
-    @FXML
-    private Node eightSquare;
-
-    @FXML
-    private Node nineSquare;
-
-    @FXML
-    private Node tenSquare;
-
-    @FXML
-    private Node elevenSquare;
-
-    @FXML
-    private Node twelveSquare;
-
-    @FXML
-    private Node thirteenSquare;
-
-    @FXML
-    private Node fourteenSquare;
-
-    @FXML
-    private Node fifteenSquare;
-    @FXML
     private Node emptySquare;
     @FXML
     private Label valueTimer;
     @FXML
-    private VBox squareBox;
+    private GridPane squaresBox;
     private Timeline timeline;
     private long currentNumberSeconds = 0;
+    private Node[][] winnerPositionSquares;
+    private Node[][] startPositionSquares;
 
     public void initialize() {
         secondary.setShowTransitionFactory(BounceInRightTransition::new);
+
+        initStartPositionSquares();
 
         initTimeLine();
 
@@ -92,8 +52,9 @@ public class SecondaryPresenter {
                 e -> {
                     Button source = (Button) e.getSource();
                     if (source.getText().equals(MaterialDesignIcon.PLAY_ARROW.text)) {
-                        squareBox.setDisable(false);
+                        squaresBox.setDisable(false);
                         timeline.playFromStart();
+                        setСomplexity(100);
                         System.out.println("Play");
                     }
 
@@ -101,7 +62,7 @@ public class SecondaryPresenter {
 
         FloatingActionButton pauseButton = new FloatingActionButton(MaterialDesignIcon.PAUSE.text,
                 e -> {
-                    squareBox.setDisable(true);
+                    squaresBox.setDisable(true);
                     timeline.stop();
                     System.out.println("Pause");
                 });
@@ -124,22 +85,23 @@ public class SecondaryPresenter {
     @FXML
     void onMousePressed(MouseEvent event) {
         System.out.println("Pressed square");
-        Node square = ((Node) event.getSource());
-//        square.setTranslateX(55);
-        GridPane parent = (GridPane) square.getParent();
+        Node childSquare = ((Node) event.getSource());
+
+        moveSquares(childSquare);
+    }
+
+    private void moveSquares(Node childSquare) {
         PositionSquare emptySqPosition = new PositionSquare(GridPane.getRowIndex(emptySquare), GridPane.getColumnIndex(emptySquare));
-        PositionSquare childSqPosition = new PositionSquare(GridPane.getRowIndex(square), GridPane.getColumnIndex(square));
-        System.out.println("GridPane: " + parent.getRowConstraints().size() + "-" + parent.getColumnConstraints().size());
-        System.out.println("Square layout: " + GridPane.getRowIndex(square) + "-" + GridPane.getColumnIndex(square));
-//        emptySquare.setTranslateX(-55);
-        if (isMaybeMove(parent.getRowConstraints().size(), parent.getRowConstraints().size(), childSqPosition, emptySqPosition)) {
-            GridPane.setColumnIndex(square, emptySqPosition.columnNumber);
-            GridPane.setRowIndex(square, emptySqPosition.rowNumber);
+        PositionSquare childSqPosition = new PositionSquare(GridPane.getRowIndex(childSquare), GridPane.getColumnIndex(childSquare));
+//        System.out.println("GridPane: " + squaresBox.getRowConstraints().size() + "-" + squaresBox.getColumnConstraints().size());
+//        System.out.println("Square layout: " + GridPane.getRowIndex(childSquare) + "-" + GridPane.getColumnIndex(childSquare));
+
+        if (isMaybeMove(squaresBox.getRowConstraints().size(), squaresBox.getRowConstraints().size(), childSqPosition, emptySqPosition)) {
+            GridPane.setColumnIndex(childSquare, emptySqPosition.columnNumber);
+            GridPane.setRowIndex(childSquare, emptySqPosition.rowNumber);
             GridPane.setColumnIndex(emptySquare, childSqPosition.columnNumber);
             GridPane.setRowIndex(emptySquare, childSqPosition.rowNumber);
         }
-
-
     }
 
     private void initTimeLine() {
@@ -176,40 +138,70 @@ public class SecondaryPresenter {
     }
 
     private void setСomplexity(int complexity) {
-        List<CourseMovement> courses = new ArrayList<>();
-        PositionSquare emptySqPosition = new PositionSquare(GridPane.getRowIndex(emptySquare), GridPane.getColumnIndex(emptySquare));
-        GridPane parent = (GridPane) emptySquare.getParent();
-        if (emptySqPosition.columnNumber - 1 >= 0)
-            courses.add(CourseMovement.LEFT);
-        if (emptySqPosition.columnNumber + 1 <= parent.getColumnConstraints().size() - 1)
-            courses.add(CourseMovement.RIGHT);
-        if (emptySqPosition.rowNumber - 1 >= 0)
-            courses.add(CourseMovement.TOP);
-        if (emptySqPosition.rowNumber + 1 <= parent.getRowConstraints().size() - 1)
-            courses.add(CourseMovement.BOTTOM);
+        for (int i = 0; i < complexity; i++) {
+            List<CourseMovement> courses = new ArrayList<>();
+            PositionSquare emptySqPosition = new PositionSquare(GridPane.getRowIndex(emptySquare), GridPane.getColumnIndex(emptySquare));
+            GridPane parent = (GridPane) emptySquare.getParent();
+            if (emptySqPosition.columnNumber - 1 >= 0)
+                courses.add(CourseMovement.LEFT);
+            if (emptySqPosition.columnNumber + 1 <= parent.getColumnConstraints().size() - 1)
+                courses.add(CourseMovement.RIGHT);
+            if (emptySqPosition.rowNumber - 1 >= 0)
+                courses.add(CourseMovement.TOP);
+            if (emptySqPosition.rowNumber + 1 <= parent.getRowConstraints().size() - 1)
+                courses.add(CourseMovement.BOTTOM);
 
-        CourseMovement courseMovement = randomCourse(courses);
-        if (courseMovement!=null){
-            switch (courseMovement){
-                case LEFT:
-//                    GridPane.setColumnIndex(square, emptySqPosition.columnNumber);
-//                    GridPane.setRowIndex(square, emptySqPosition.rowNumber);
-//                    GridPane.setColumnIndex(emptySquare, childSqPosition.columnNumber);
-//                    GridPane.setRowIndex(emptySquare, childSqPosition.rowNumber);
+            CourseMovement courseMovement = randomCourse(courses);
+            if (courseMovement != null) {
+                Node childSquare = null;
+                switch (courseMovement) {
+                    case LEFT:
+                        childSquare = startPositionSquares[emptySqPosition.rowNumber][emptySqPosition.columnNumber - 1];
+                        moveSquares(childSquare);
+                        startPositionSquares[emptySqPosition.rowNumber][emptySqPosition.columnNumber - 1] = emptySquare;
+                        startPositionSquares[emptySqPosition.rowNumber][emptySqPosition.columnNumber] = childSquare;
+                        break;
+                    case RIGHT:
+                        childSquare = startPositionSquares[emptySqPosition.rowNumber][emptySqPosition.columnNumber + 1];
+                        moveSquares(childSquare);
+                        startPositionSquares[emptySqPosition.rowNumber][emptySqPosition.columnNumber + 1] = emptySquare;
+                        startPositionSquares[emptySqPosition.rowNumber][emptySqPosition.columnNumber] = childSquare;
+                        break;
+                    case TOP:
+                        childSquare = startPositionSquares[emptySqPosition.rowNumber - 1][emptySqPosition.columnNumber];
+                        moveSquares(childSquare);
+                        startPositionSquares[emptySqPosition.rowNumber - 1][emptySqPosition.columnNumber] = emptySquare;
+                        startPositionSquares[emptySqPosition.rowNumber][emptySqPosition.columnNumber] = childSquare;
+                        break;
+                    case BOTTOM:
+                        childSquare = startPositionSquares[emptySqPosition.rowNumber + 1][emptySqPosition.columnNumber];
+                        moveSquares(childSquare);
+                        startPositionSquares[emptySqPosition.rowNumber + 1][emptySqPosition.columnNumber] = emptySquare;
+                        startPositionSquares[emptySqPosition.rowNumber][emptySqPosition.columnNumber] = childSquare;
+                        break;
+
+                }
             }
-
-//            PositionSquare childSqPosition = new PositionSquare(GridPane.getRowIndex(square), GridPane.getColumnIndex(square));
         }
 
 
     }
 
-    private CourseMovement randomCourse(List<CourseMovement> courses){
+    private CourseMovement randomCourse(List<CourseMovement> courses) {
         if (courses.isEmpty())
             return null;
         else
-          return   courses.get(new  Random().nextInt(courses.size()));
+            return courses.get(new Random().nextInt(courses.size()));
 
+    }
+
+    private void initStartPositionSquares() {
+        int countRow = squaresBox.getRowConstraints().size();
+        int countColumn = squaresBox.getColumnConstraints().size();
+        startPositionSquares = new Pane[countRow][countColumn];
+        squaresBox.getChildren().forEach(node -> {
+            startPositionSquares[GridPane.getRowIndex(node)][GridPane.getColumnIndex(node)] = node;
+        });
     }
 
     class PositionSquare {

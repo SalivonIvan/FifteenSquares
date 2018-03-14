@@ -15,19 +15,20 @@ import javafx.geometry.Side;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.CubicCurveTo;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
 import javafx.util.Duration;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
-import javafx.scene.paint.Color;
-import javafx.scene.paint.LinearGradient;
 
 public class SecondaryPresenter {
 
@@ -100,26 +101,35 @@ public class SecondaryPresenter {
         createAnimateSnow();
     }
 
-    private void createAnimateSnow(){
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(10), new EventHandler<ActionEvent>() {
+    private void createAnimateSnow() {
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(50), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Circle ball = new Circle(3, Color.DARKSLATEBLUE);
+                Circle snow = new Circle(3, Color.WHITESMOKE);
                 Random random = new Random();
-                ball.relocate(random.nextInt((int) secondary.getWidth()), 0);
-                secondary.getChildren().add(ball);
-                TranslateTransition moveSnow = new TranslateTransition(Duration.seconds(10),ball);
-                moveSnow.setByY(secondary.getHeight());
-                moveSnow.setOnFinished(event1 -> {
-                    ball.relocate(random.nextInt((int) secondary.getWidth()), 0);
-                    moveSnow.play();
-                    System.out.println("Finish snow");
+                snow.relocate(random.nextInt((int) secondary.getWidth()), -10);
+                secondary.getChildren().add(snow);
+                PathTransition pt = new PathTransition(Duration.seconds(10), snow);
+                Path path = new Path();
+                path.getElements().add(new MoveTo(0f, 50f));
+                path.getElements().add(new MoveTo(50,secondary.getHeight()));
+
+                pt.setPath(path);
+                TranslateTransition ttSnow = new TranslateTransition(Duration.seconds(10), snow);
+                ttSnow.setByY(secondary.getHeight());
+                ttSnow.setOnFinished(event1 -> {
+//                    ball.setTranslateX(random.nextInt((int) secondary.getWidth()));
+                    snow.setTranslateX(0);
+                    snow.setTranslateY(0);
+                    ttSnow.play();
+                    System.out.println("Finish snow" + snow.getLayoutY());
                 });
-                moveSnow.play();
+                ttSnow.play();
+//                pt.play();
             }
         }));
 
-        timeline.setCycleCount(100);
+        timeline.setCycleCount(200);
         timeline.play();
 
 //        moveSnow.on
@@ -165,13 +175,13 @@ public class SecondaryPresenter {
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.setAutoReverse(false);
     }
-    
-    private void initTimeLineWinLabel(){
+
+    private void initTimeLineWinLabel() {
         KeyValue kv1 = new KeyValue(winLabel.textFillProperty(), Color.RED);
         KeyValue kv2 = new KeyValue(winLabel.textFillProperty(), Color.GREEN);
         KeyFrame kf1 = new KeyFrame(Duration.ZERO, kv1);
         KeyFrame kf2 = new KeyFrame(Duration.millis(500), kv2);
-        Timeline timeline = new Timeline(kf1,kf2);
+        Timeline timeline = new Timeline(kf1, kf2);
         timeline.setAutoReverse(true);
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();

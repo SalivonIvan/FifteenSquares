@@ -7,8 +7,7 @@ import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.layout.layer.FloatingActionButton;
 import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
+import javafx.animation.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -16,17 +15,17 @@ import javafx.geometry.Side;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
+import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import javafx.animation.Animation;
-import javafx.animation.KeyValue;
+
 import javafx.scene.paint.Color;
 import javafx.scene.paint.LinearGradient;
 
@@ -98,6 +97,32 @@ public class SecondaryPresenter {
                         -> System.out.println("Favorite")));
             }
         });
+        createAnimateSnow();
+    }
+
+    private void createAnimateSnow(){
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(10), new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Circle ball = new Circle(3, Color.DARKSLATEBLUE);
+                Random random = new Random();
+                ball.relocate(random.nextInt((int) secondary.getWidth()), 0);
+                secondary.getChildren().add(ball);
+                TranslateTransition moveSnow = new TranslateTransition(Duration.seconds(10),ball);
+                moveSnow.setByY(secondary.getHeight());
+                moveSnow.setOnFinished(event1 -> {
+                    ball.relocate(random.nextInt((int) secondary.getWidth()), 0);
+                    moveSnow.play();
+                    System.out.println("Finish snow");
+                });
+                moveSnow.play();
+            }
+        }));
+
+        timeline.setCycleCount(100);
+        timeline.play();
+
+//        moveSnow.on
     }
 
     @FXML

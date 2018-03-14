@@ -1,3 +1,4 @@
-.view {-fx-background-color: #c3dfff;
+.view {
+    -fx-background-image: url("/com/fifteen/squares/image/secondaryBackground.jpg");
 
 }

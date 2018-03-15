@@ -20,7 +20,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.CubicCurveTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.util.Duration;
@@ -112,7 +111,7 @@ public class SecondaryPresenter {
                 PathTransition pt = new PathTransition(Duration.seconds(10), snow);
                 Path path = new Path();
                 path.getElements().add(new MoveTo(0f, 50f));
-                path.getElements().add(new MoveTo(50,secondary.getHeight()));
+                path.getElements().add(new MoveTo(50, secondary.getHeight()));
 
                 pt.setPath(path);
                 TranslateTransition ttSnow = new TranslateTransition(Duration.seconds(10), snow);
@@ -275,12 +274,12 @@ public class SecondaryPresenter {
         int countColumn = squaresBox.getColumnConstraints().size();
         targetPositionSquares = new Pane[countRow][countColumn];
         winnerPositionSquares = new Pane[countRow][countColumn];
-        squaresBox.getChildren().forEach(node -> {
+        for (Node node : squaresBox.getChildren()) {
             int rowI = GridPane.getRowIndex(node);
             int columnI = GridPane.getColumnIndex(node);
             targetPositionSquares[rowI][columnI] = node;
             winnerPositionSquares[rowI][columnI] = node;
-        });
+        }
     }
 
     private boolean isWinnerPosition() {

@@ -1,6 +1,8 @@
 package com.fifteen.squares.views;
 
 import com.fifteen.squares.FifteenSquaresApplication;
+import com.gluonhq.charm.down.Services;
+import com.gluonhq.charm.down.plugins.SettingsService;
 import com.gluonhq.charm.glisten.animation.BounceInRightTransition;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.AppBar;
@@ -67,7 +69,9 @@ public class SecondaryPresenter {
                     if (!isStartGame) {
                         valueTimer.setText(LocalTime.ofSecondOfDay(currentNumberSeconds).toString());
                         initStartPositionSquares();
-                        setСomplexity(3);
+                        setСomplexity(Integer.parseInt(Services.get(SettingsService.class)
+                                .map(settingsService -> settingsService.retrieve(PrimaryView.LEVEL_COMPLEXITY))
+                                .orElse(PrimaryView.DEFAULT_LEVEL_COMPLEXITY)));
                         isStartGame = true;
                         winLabel.setVisible(false);
                     }
@@ -85,18 +89,25 @@ public class SecondaryPresenter {
                 });
         playButton.attachTo(pauseButton, Side.LEFT);
 
-        secondary.getLayers().add(pauseButton.getLayer());
+        secondary.getLayers().
 
-        secondary.showingProperty().addListener((obs, oldValue, newValue) -> {
-            if (newValue) {
-                AppBar appBar = MobileApplication.getInstance().getAppBar();
-                appBar.setNavIcon(MaterialDesignIcon.MENU.button(e
-                        -> MobileApplication.getInstance().showLayer(FifteenSquaresApplication.MENU_LAYER)));
-                appBar.setTitleText("Game");
-                appBar.getActionItems().add(MaterialDesignIcon.FAVORITE.button(e
-                        -> System.out.println("Favorite")));
-            }
-        });
+                add(pauseButton.getLayer());
+
+        secondary.showingProperty().
+
+                addListener((obs, oldValue, newValue) ->
+
+                {
+                    if (newValue) {
+                        AppBar appBar = MobileApplication.getInstance().getAppBar();
+                        appBar.setNavIcon(MaterialDesignIcon.MENU.button(e
+                                -> MobileApplication.getInstance().showLayer(FifteenSquaresApplication.MENU_LAYER)));
+                        appBar.setTitleText("Game");
+                        appBar.getActionItems().add(MaterialDesignIcon.FAVORITE.button(e
+                                -> System.out.println("Favorite")));
+                    }
+                });
+
         createAnimateSnow();
     }
 

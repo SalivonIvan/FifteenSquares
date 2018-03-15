@@ -28,7 +28,7 @@ public class DrawerManager {
                 new Avatar(21, new Image(DrawerManager.class.getResourceAsStream("/icon.png"))));
         drawer.setHeader(header);
         
-        final Item primaryItem = new ViewItem("About", MaterialDesignIcon.DESCRIPTION.graphic(), PRIMARY_VIEW, ViewStackPolicy.SKIP);
+        final Item primaryItem = new ViewItem("Setting", MaterialDesignIcon.SETTINGS.graphic(), PRIMARY_VIEW, ViewStackPolicy.SKIP);
         final Item secondaryItem = new ViewItem("Game", MaterialDesignIcon.GAMEPAD.graphic(), SECONDARY_VIEW);
         drawer.getItems().addAll(primaryItem, secondaryItem);
         

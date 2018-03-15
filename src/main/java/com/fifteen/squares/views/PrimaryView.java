@@ -6,6 +6,9 @@ import javafx.fxml.FXMLLoader;
 
 public class PrimaryView {
 
+    public static final String LEVEL_COMPLEXITY = "level.complexity";
+    public static final String DEFAULT_LEVEL_COMPLEXITY = "10";
+
     private final String name;
 
     public PrimaryView(String name) {

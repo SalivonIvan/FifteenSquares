@@ -1,6 +1,7 @@
 package com.fifteen.squares.views;
 
 import com.fifteen.squares.FifteenSquaresApplication;
+import com.fifteen.squares.Setting;
 import com.gluonhq.charm.down.Services;
 import com.gluonhq.charm.down.plugins.SettingsService;
 import com.gluonhq.charm.glisten.animation.BounceInRightTransition;
@@ -70,8 +71,8 @@ public class SecondaryPresenter {
                         valueTimer.setText(LocalTime.ofSecondOfDay(currentNumberSeconds).toString());
                         initStartPositionSquares();
                         setСomplexity(Integer.parseInt(Services.get(SettingsService.class)
-                                .map(settingsService -> settingsService.retrieve(PrimaryView.LEVEL_COMPLEXITY))
-                                .orElse(PrimaryView.DEFAULT_LEVEL_COMPLEXITY)));
+                                .map(settingsService -> settingsService.retrieve(Setting.LEVEL_COMPLEXITY))
+                                .orElse(Setting.DEFAULT_LEVEL_COMPLEXITY)));
                         isStartGame = true;
                         winLabel.setVisible(false);
                     }

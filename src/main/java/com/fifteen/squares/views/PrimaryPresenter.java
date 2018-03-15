@@ -1,6 +1,7 @@
 package com.fifteen.squares.views;
 
 import com.fifteen.squares.FifteenSquaresApplication;
+import com.fifteen.squares.Setting;
 import com.gluonhq.charm.down.Services;
 import com.gluonhq.charm.down.plugins.SettingsService;
 import com.gluonhq.charm.glisten.application.MobileApplication;
@@ -9,8 +10,6 @@ import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
-
-import static com.fifteen.squares.views.PrimaryView.DEFAULT_LEVEL_COMPLEXITY;
 
 public class PrimaryPresenter {
 
@@ -44,16 +43,16 @@ public class PrimaryPresenter {
         Services.get(SettingsService.class).ifPresent(service -> {
             if (valueLevelComplexity.getText() == null || valueLevelComplexity.getText().trim().equals(""))
                 valueLevelComplexity.setText("0");
-            service.store(PrimaryView.LEVEL_COMPLEXITY, valueLevelComplexity.getText());
+            service.store(Setting.LEVEL_COMPLEXITY, valueLevelComplexity.getText());
         });
     }
 
     private void initValueLevelComplexity() {
         Services.get(SettingsService.class).ifPresent(service -> {
-            String level = service.retrieve(PrimaryView.LEVEL_COMPLEXITY);
+            String level = service.retrieve(Setting.LEVEL_COMPLEXITY);
             if (level == null) {
-                level = DEFAULT_LEVEL_COMPLEXITY;
-                service.store(PrimaryView.LEVEL_COMPLEXITY, level);
+                level = Setting.DEFAULT_LEVEL_COMPLEXITY;
+                service.store(Setting.LEVEL_COMPLEXITY, level);
             }
             valueLevelComplexity.setText(level);
         });

@@ -20,6 +20,9 @@ mainClassName = 'com.fifteen.squares.FifteenSquaresApplication'
 
 dependencies {
     compile 'com.gluonhq:charm:4.4.1'
+    // https://mvnrepository.com/artifact/com.google.android/android
+    compile group: 'com.google.android', name: 'android', version: '4.1.1.4'
+
 }
 
 jfxmobile {
